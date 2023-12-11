@@ -1,9 +1,9 @@
 package com.bridgelabz.employeepayroll;
+import com.bridgelabz.employeepayroll.db.DatabaseConnection;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
