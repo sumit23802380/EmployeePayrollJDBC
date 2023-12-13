@@ -1,5 +1,4 @@
 package com.bridgelabz.employeepayroll.model.dao.implmentation;
-
 import com.bridgelabz.employeepayroll.db.DatabaseConnection;
 import com.bridgelabz.employeepayroll.model.dao.PayrollDao;
 import com.bridgelabz.employeepayroll.model.entities.EmployeePayroll;
@@ -15,7 +14,14 @@ import java.util.List;
 
 public class PayrollDaoJDBC implements PayrollDao {
     private Connection connection;
-
+    private static PayrollDaoJDBC instance;
+    private PayrollDaoJDBC(){}
+    public static PayrollDaoJDBC getInstance(){
+        if(instance == null){
+            instance = new PayrollDaoJDBC();
+        }
+        return instance;
+    }
     @Override
     public void insert(Payroll payroll) {
         connection = DatabaseConnection.getConnection();

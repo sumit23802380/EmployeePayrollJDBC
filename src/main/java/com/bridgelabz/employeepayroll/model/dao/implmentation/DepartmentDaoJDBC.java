@@ -15,6 +15,14 @@ import java.util.List;
 
 public class DepartmentDaoJDBC implements DepartmentDao {
     private Connection connection;
+    private static DepartmentDaoJDBC instance;
+    private DepartmentDaoJDBC(){}
+    public static DepartmentDaoJDBC getInstance(){
+        if(instance == null){
+            instance = new DepartmentDaoJDBC();
+        }
+        return instance;
+    }
     @Override
     public void insert(Department department) {
         connection = DatabaseConnection.getConnection();

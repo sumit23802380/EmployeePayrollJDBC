@@ -14,6 +14,14 @@ import java.util.List;
 
 public class CompanyDaoJDBC implements CompanyDao {
     private Connection connection;
+    private static CompanyDaoJDBC instance;
+    private CompanyDaoJDBC(){}
+    public static CompanyDaoJDBC getInstance(){
+        if(instance == null){
+            instance = new CompanyDaoJDBC();
+        }
+        return instance;
+    }
 
     @Override
     public void insert(Company company) {

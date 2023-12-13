@@ -15,12 +15,12 @@ import static com.bridgelabz.employeepayroll.db.DatabaseConnection.*;
  */
 public class Main {
     public static void main(String[] args) {
-        EmployeeDaoJDBC employeeDaoJDBC = new EmployeeDaoJDBC();
+        EmployeeDaoJDBC employeeDaoJDBC = EmployeeDaoJDBC.getInstance();
 
         Employee employee = employeeDaoJDBC.findById(7);
         System.out.println(employee);
 
-        PayrollDaoJDBC payrollDaoJDBC = new PayrollDaoJDBC();
+        PayrollDaoJDBC payrollDaoJDBC = PayrollDaoJDBC.getInstance();
         Payroll payroll = payrollDaoJDBC.findByEmployeeId(employee.getEmployeeId());
         System.out.println(payroll);
 

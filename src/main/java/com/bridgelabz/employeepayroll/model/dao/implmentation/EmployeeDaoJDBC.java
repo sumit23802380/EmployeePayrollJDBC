@@ -18,6 +18,14 @@ import static java.util.Date.*;
 
 public class EmployeeDaoJDBC implements EmployeeDao {
     private Connection connection;
+    private static EmployeeDaoJDBC instance;
+    private EmployeeDaoJDBC(){}
+    public static EmployeeDaoJDBC getInstance(){
+        if(instance == null){
+            instance = new EmployeeDaoJDBC();
+        }
+        return instance;
+    }
     @Override
     public void insert(Employee employee) {
         connection= DatabaseConnection.getConnection();
