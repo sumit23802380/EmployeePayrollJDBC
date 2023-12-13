@@ -93,6 +93,7 @@ public class CompanyDaoJDBC implements CompanyDao {
 
     private Company instantiateCompany(ResultSet resultSet) throws SQLException {
         Company company = new Company();
+        company.setCompanyId(resultSet.getInt("CompanyId"));
         company.setCompanyName(resultSet.getString("CompanyName"));
         return company;
     }

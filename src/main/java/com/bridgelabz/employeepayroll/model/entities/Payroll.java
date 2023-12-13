@@ -12,6 +12,9 @@ public class Payroll {
     public int getPayrollId() {
         return payrollId;
     }
+    public void setPayrollId(int payrollId) {
+        this.payrollId = payrollId;
+    }
 
     public int getEmployeeId() {
         return employeeId;

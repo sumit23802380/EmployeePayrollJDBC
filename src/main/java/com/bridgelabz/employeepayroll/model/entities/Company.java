@@ -1,11 +1,16 @@
 package com.bridgelabz.employeepayroll.model.entities;
 
 public class Company {
+
+
     private int companyId;
     private String companyName;
 
     public int getCompanyId() {
         return companyId;
+    }
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     public String getCompanyName() {

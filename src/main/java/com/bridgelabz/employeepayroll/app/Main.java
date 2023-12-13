@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayroll.app;
 import com.bridgelabz.employeepayroll.db.DatabaseConnection;
+import com.bridgelabz.employeepayroll.model.dao.EmployeeDao;
 import com.bridgelabz.employeepayroll.model.dao.implmentation.CompanyDaoJDBC;
 import com.bridgelabz.employeepayroll.model.dao.implmentation.DepartmentDaoJDBC;
 import com.bridgelabz.employeepayroll.model.dao.implmentation.EmployeeDaoJDBC;
@@ -14,6 +15,18 @@ import static com.bridgelabz.employeepayroll.db.DatabaseConnection.*;
  */
 public class Main {
     public static void main(String[] args) {
+        EmployeeDaoJDBC employeeDaoJDBC = new EmployeeDaoJDBC();
 
+        Employee employee = employeeDaoJDBC.findById(7);
+        System.out.println(employee);
+
+        PayrollDaoJDBC payrollDaoJDBC = new PayrollDaoJDBC();
+        Payroll payroll = payrollDaoJDBC.findByEmployeeId(employee.getEmployeeId());
+        System.out.println(payroll);
+
+        payroll.setBasicPay(300000);
+        payrollDaoJDBC.update(payroll);
+
+        System.out.println(payrollDaoJDBC.findAll());
     }
 }

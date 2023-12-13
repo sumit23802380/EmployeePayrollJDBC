@@ -125,6 +125,7 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
     private Employee instantiateEmployee(ResultSet resultSet) throws SQLException {
         Employee employee = new Employee();
+        employee.setEmployeeId(resultSet.getInt("EmployeeId"));
         employee.setEmployeeName(resultSet.getString("EmployeeName"));
         employee.setGender(resultSet.getString("Gender"));
         employee.setCompanyId(resultSet.getInt("CompanyId"));

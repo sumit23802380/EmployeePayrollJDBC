@@ -41,18 +41,11 @@ public class PayrollDaoJDBC implements PayrollDao {
             System.out.println(e.getMessage());
         }
     }
-    private int payrollId;
-    private int employeeId;
-    private int basicPay;
-    private int deductions;
-    private int taxable;
-    private int incomeTax;
-    private int netPay;
     @Override
     public void update(Payroll payroll) {
         connection = DatabaseConnection.getConnection();
         try {
-            String sql = "UPDATE Payroll SET EmployeeId = ? , BasicPay = ? , Deductions = ? , TaxablePay = ? , IncomeTax = ? , NetPay = ? , where PayrollId = ? ;";
+            String sql = "UPDATE Payroll SET EmployeeId = ? , BasicPay = ? , Deductions = ? , TaxablePay = ? , IncomeTax = ? , NetPay = ?  where PayrollId = ? ;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, payroll.getEmployeeId());
             preparedStatement.setInt(2, payroll.getBasicPay());
@@ -112,7 +105,25 @@ public class PayrollDaoJDBC implements PayrollDao {
         }
         return null;
     }
-
+    public Payroll findByEmployeeId(int id) {
+        connection= DatabaseConnection.getConnection();
+        try{
+            String sql = "select * from Payroll where EmployeeId = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1 , id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                System.out.println("Hello");
+                return instantitatePayroll(resultSet);
+            }
+            return null;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
     public List<Payroll> findAll() {
         connection= DatabaseConnection.getConnection();
         List<Payroll> payrollList = new ArrayList<>();
@@ -134,6 +145,7 @@ public class PayrollDaoJDBC implements PayrollDao {
 
     private Payroll instantitatePayroll(ResultSet resultSet) throws SQLException {
         Payroll payroll = new Payroll();
+        payroll.setPayrollId(resultSet.getInt("PayrollId"));
         payroll.setEmployeeId(resultSet.getInt("EmployeeId"));
         payroll.setBasicPay(resultSet.getInt("BasicPay"));
         payroll.setDeductions(resultSet.getInt("Deductions"));

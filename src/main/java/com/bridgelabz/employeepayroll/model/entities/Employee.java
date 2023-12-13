@@ -37,6 +37,9 @@ public class Employee {
     public String getGender() {
         return gender;
     }
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
