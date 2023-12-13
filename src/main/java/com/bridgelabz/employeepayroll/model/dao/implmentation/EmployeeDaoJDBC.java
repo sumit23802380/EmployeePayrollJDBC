@@ -11,8 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Date.*;
 
@@ -201,6 +202,32 @@ public class EmployeeDaoJDBC implements EmployeeDao {
             System.out.println(e.getMessage());
         }
         return employeePayrollList;
+    }
+
+    public Map<String , Double> analyzeEmployeeSalaries(){
+        Map<String, Double> analysis = new HashMap<>();
+        connection= DatabaseConnection.getConnection();
+        try{
+            String sql = "select SUM(p.NetPay) as SalarySum , MIN(p.NetPay) as MinimumNetPay , MAX(p.NetPay) as MaximumNetPay , COUNT(*) as TotalCount  , e.Gender as Gender from Employee as e join Payroll as p on e.EmployeeId = p.EmployeeId  GROUP BY Gender";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Double salarySum = resultSet.getDouble("SalarySum");
+                Double minimumNetPay = resultSet.getDouble("MinimumNetPay");
+                Double maximumNetPay = resultSet.getDouble("MaximumNetPay");
+                Double totalCount = resultSet.getDouble("TotalCount");
+                String gender = resultSet.getString("Gender");
+                analysis.put("SalarySum : " + gender , salarySum);
+                analysis.put("MinimumNetPay : " + gender, minimumNetPay);
+                analysis.put("MaximumNetPay : " + gender, maximumNetPay);
+                analysis.put("TotalCount : " + gender, totalCount);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return analysis;
     }
 
     private EmployeePayroll instantiateEmployeePayroll(ResultSet resultSet) throws SQLException {

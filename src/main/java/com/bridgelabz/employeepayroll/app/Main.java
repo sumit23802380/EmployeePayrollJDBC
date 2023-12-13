@@ -18,6 +18,6 @@ import static com.bridgelabz.employeepayroll.db.DatabaseConnection.*;
 public class Main {
     public static void main(String[] args) {
         EmployeeDaoJDBC employeeDaoJDBC = EmployeeDaoJDBC.getInstance();
-        System.out.println(employeeDaoJDBC.getEmployeesJoinedInDateRange(LocalDate.of(2023, 1, 1) , LocalDate.of(2023, 1, 2)));
+        System.out.println(employeeDaoJDBC.analyzeEmployeeSalaries());
     }
 }
