@@ -71,8 +71,8 @@ public class DatabaseConnection {
     }
 
     /**
-     * @return : Boolean value whether properties are loaded or not
      * @desc : Method to load the properties like url , username and password for connection from config file
+     * @return : Boolean value whether properties are loaded or not
      */
     private static boolean loadProperties() {
         Properties properties = new Properties();
@@ -83,7 +83,7 @@ public class DatabaseConnection {
             return false;
         }
         url = properties.getProperty("jdbc.url");
-        username = properties.getProperty("jdbc.user");
+        username = properties.getProperty("jdbc.username");
         password = properties.getProperty("jdbc.password");
         return true;
     }

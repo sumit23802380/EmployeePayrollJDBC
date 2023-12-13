@@ -9,11 +9,10 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @desc : DatabaseConnection Class testclass
+ * @desc : DatabaseConnection Test Class
  */
 public class DatabaseConnectionTest {
     private static Connection connection;
-
     /**
      * @desc : Method to test the set up of connection check whether null or not , connection should not be null
      */
