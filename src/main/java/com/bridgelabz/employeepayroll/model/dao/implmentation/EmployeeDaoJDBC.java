@@ -131,6 +131,27 @@ public class EmployeeDaoJDBC implements EmployeeDao {
         return employeeList;
     }
 
+    public List<Employee> getEmployeesJoinedInDateRange(LocalDate start , LocalDate end) {
+        connection= DatabaseConnection.getConnection();
+        List<Employee> employeeList = new ArrayList<>();
+        try{
+            String sql = "SELECT * FROM Employee WHERE StartDate BETWEEN ? AND ? ;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDate(1, java.sql.Date.valueOf(start));
+            preparedStatement.setDate(2, java.sql.Date.valueOf(end));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Employee employee = instantiateEmployee(resultSet);
+                employeeList.add(employee);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return employeeList;
+    }
+
     private Employee instantiateEmployee(ResultSet resultSet) throws SQLException {
         Employee employee = new Employee();
         employee.setEmployeeId(resultSet.getInt("EmployeeId"));

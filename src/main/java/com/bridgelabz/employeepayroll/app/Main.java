@@ -8,6 +8,8 @@ import com.bridgelabz.employeepayroll.model.dao.implmentation.PayrollDaoJDBC;
 import com.bridgelabz.employeepayroll.model.entities.*;
 
 import java.sql.Connection;
+import java.time.LocalDate;
+
 import static com.bridgelabz.employeepayroll.db.DatabaseConnection.*;
 
 /**
@@ -16,17 +18,6 @@ import static com.bridgelabz.employeepayroll.db.DatabaseConnection.*;
 public class Main {
     public static void main(String[] args) {
         EmployeeDaoJDBC employeeDaoJDBC = EmployeeDaoJDBC.getInstance();
-
-        Employee employee = employeeDaoJDBC.findById(7);
-        System.out.println(employee);
-
-        PayrollDaoJDBC payrollDaoJDBC = PayrollDaoJDBC.getInstance();
-        Payroll payroll = payrollDaoJDBC.findByEmployeeId(employee.getEmployeeId());
-        System.out.println(payroll);
-
-        payroll.setBasicPay(300000);
-        payrollDaoJDBC.update(payroll);
-
-        System.out.println(payrollDaoJDBC.findAll());
+        System.out.println(employeeDaoJDBC.getEmployeesJoinedInDateRange(LocalDate.of(2023, 1, 1) , LocalDate.of(2023, 1, 2)));
     }
 }
