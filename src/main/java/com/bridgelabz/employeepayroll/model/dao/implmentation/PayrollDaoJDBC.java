@@ -41,6 +41,11 @@ public class PayrollDaoJDBC implements PayrollDao {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * @desc :Method to update the employee payroll by using the JDBC prepared statement
+     * @param : payroll - payroll object that is updated
+     */
     @Override
     public void update(Payroll payroll) {
         connection = DatabaseConnection.getConnection();
