@@ -1,4 +1,5 @@
 package com.bridgelabz.employeepayroll.model.dao.implmentation;
+
 import com.bridgelabz.employeepayroll.db.DatabaseConnection;
 import com.bridgelabz.employeepayroll.model.dao.PayrollDao;
 import com.bridgelabz.employeepayroll.model.entities.EmployeePayroll;
@@ -12,16 +13,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @desc : PayrollDaoJDBC Class
+ */
 public class PayrollDaoJDBC implements PayrollDao {
     private Connection connection;
     private static PayrollDaoJDBC instance;
-    private PayrollDaoJDBC(){}
-    public static PayrollDaoJDBC getInstance(){
-        if(instance == null){
+
+    /**
+     * @desc : Constructor create the single instance of PayrollDaoJDBC
+     */
+    private PayrollDaoJDBC() {
+    }
+    /**
+     * @desc : Method to get the instance of PayrollDaoJDBC single instance
+     * @return : instance of PayrollDaoJDBC
+     */
+    public static PayrollDaoJDBC getInstance() {
+        if (instance == null) {
             instance = new PayrollDaoJDBC();
         }
         return instance;
     }
+    /**
+     * @desc : Method to insert the new Payroll
+     * @param : payroll
+     */
     @Override
     public void insert(Payroll payroll) {
         connection = DatabaseConnection.getConnection();
@@ -33,8 +50,8 @@ public class PayrollDaoJDBC implements PayrollDao {
             preparedStatement.setInt(2, payroll.getBasicPay());
             preparedStatement.setInt(3, payroll.getDeductions());
             preparedStatement.setInt(4, payroll.getTaxable());
-            preparedStatement.setInt(5 , payroll.getIncomeTax());
-            preparedStatement.setInt(6 , payroll.getNetPay());
+            preparedStatement.setInt(5, payroll.getIncomeTax());
+            preparedStatement.setInt(6, payroll.getNetPay());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
@@ -76,7 +93,10 @@ public class PayrollDaoJDBC implements PayrollDao {
             System.out.println(e.getMessage());
         }
     }
-
+    /**
+     * @desc : Method to delete the Payroll by using id
+     * @param : id
+     */
     @Override
     public void deleteBy(int id) {
         connection = DatabaseConnection.getConnection();
@@ -95,65 +115,83 @@ public class PayrollDaoJDBC implements PayrollDao {
             System.out.println(e.getMessage());
         }
     }
-
+    /**
+     * @desc : Method to find the Payroll by id
+     * @param : id
+     * @return : payroll
+     */
     @Override
     public Payroll findById(int id) {
-        connection= DatabaseConnection.getConnection();
-        try{
+        connection = DatabaseConnection.getConnection();
+        try {
             String sql = "select * from Payroll where PayrollId = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1 , id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 Payroll payroll = instantitatePayroll(resultSet);
                 return payroll;
             }
             return null;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
         return null;
     }
+
+    /**
+     * @desc : Method to find the payroll using employee id
+     * @param : id
+     * @return : payroll of particular employee
+     */
     public Payroll findByEmployeeId(int id) {
-        connection= DatabaseConnection.getConnection();
-        try{
+        connection = DatabaseConnection.getConnection();
+        try {
             String sql = "select * from Payroll where EmployeeId = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1 , id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 System.out.println("Hello");
                 return instantitatePayroll(resultSet);
             }
             return null;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
         return null;
     }
+
+    /**
+     * @desc : Method to find all the payroll list
+     * @return : list of all payrolls
+     */
     public List<Payroll> findAll() {
-        connection= DatabaseConnection.getConnection();
+        connection = DatabaseConnection.getConnection();
         List<Payroll> payrollList = new ArrayList<>();
-        try{
+        try {
             String sql = "select * from Payroll;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Payroll payroll = instantitatePayroll(resultSet);
                 payrollList.add(payroll);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
         return payrollList;
     }
 
+    /**
+     * @desc : Method to instantiate Payroll
+     * @param : resultSet - result from db
+     * @return : payroll object
+     * @throws : SQLException
+     */
     private Payroll instantitatePayroll(ResultSet resultSet) throws SQLException {
         Payroll payroll = new Payroll();
         payroll.setPayrollId(resultSet.getInt("PayrollId"));

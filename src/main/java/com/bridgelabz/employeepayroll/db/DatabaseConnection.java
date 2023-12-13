@@ -1,4 +1,5 @@
 package com.bridgelabz.employeepayroll.db;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -71,8 +72,8 @@ public class DatabaseConnection {
     }
 
     /**
-     * @desc : Method to load the properties like url , username and password for connection from config file
      * @return : Boolean value whether properties are loaded or not
+     * @desc : Method to load the properties like url , username and password for connection from config file
      */
     private static boolean loadProperties() {
         Properties properties = new Properties();

@@ -3,8 +3,6 @@ package com.bridgelabz.employeepayroll.model.dao.implmentation;
 import com.bridgelabz.employeepayroll.db.DatabaseConnection;
 import com.bridgelabz.employeepayroll.model.dao.CompanyDao;
 import com.bridgelabz.employeepayroll.model.entities.Company;
-import com.bridgelabz.employeepayroll.model.entities.Department;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,17 +10,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @desc : CompanyDaoJDBC Class implements CompanyDao
+ */
 public class CompanyDaoJDBC implements CompanyDao {
     private Connection connection;
     private static CompanyDaoJDBC instance;
-    private CompanyDaoJDBC(){}
-    public static CompanyDaoJDBC getInstance(){
-        if(instance == null){
+
+    /**
+     * @desc : Constructor create the single instance of CompanyDaoJDBC
+     */
+    private CompanyDaoJDBC() {
+    }
+
+    /**
+     * @desc : Method to get the instance of CompanyDaoJDBC single instance
+     * @return : instance of CompanyDaoJDBC
+     */
+    public static CompanyDaoJDBC getInstance() {
+        if (instance == null) {
             instance = new CompanyDaoJDBC();
         }
         return instance;
     }
 
+    /**
+     * @desc : Method to insert the new Company
+     * @param : company
+     */
     @Override
     public void insert(Company company) {
         connection = DatabaseConnection.getConnection();
@@ -42,6 +57,10 @@ public class CompanyDaoJDBC implements CompanyDao {
         }
     }
 
+    /**
+     * @desc : Method to update  the Company
+     * @param : company
+     */
     @Override
     public void update(Company company) {
         connection = DatabaseConnection.getConnection();
@@ -62,6 +81,10 @@ public class CompanyDaoJDBC implements CompanyDao {
         }
     }
 
+    /**
+     * @desc : Method to delete the Company by using id
+     * @param : id
+     */
     @Override
     public void deleteBy(int id) {
         connection = DatabaseConnection.getConnection();
@@ -81,6 +104,11 @@ public class CompanyDaoJDBC implements CompanyDao {
         }
     }
 
+    /**
+     * @desc : Method to find the Company by id
+     * @param : id
+     * @return : Company
+     */
     @Override
     public Company findById(int id) {
         connection = DatabaseConnection.getConnection();
@@ -99,13 +127,10 @@ public class CompanyDaoJDBC implements CompanyDao {
         return null;
     }
 
-    private Company instantiateCompany(ResultSet resultSet) throws SQLException {
-        Company company = new Company();
-        company.setCompanyId(resultSet.getInt("CompanyId"));
-        company.setCompanyName(resultSet.getString("CompanyName"));
-        return company;
-    }
-
+    /**
+     * @desc : Method to list all the companies
+     * @return : list of companies
+     */
     @Override
     public List<Company> findAll() {
         List<Company> companyList = new ArrayList<>();
@@ -122,5 +147,18 @@ public class CompanyDaoJDBC implements CompanyDao {
             System.out.println(e.getMessage());
         }
         return companyList;
+    }
+
+    /**
+     * @desc : Method to instantiateCompany Object from ResultSet
+     * @param : resultSet
+     * @return : Company object
+     * @throws : SQLException
+     */
+    private Company instantiateCompany(ResultSet resultSet) throws SQLException {
+        Company company = new Company();
+        company.setCompanyId(resultSet.getInt("CompanyId"));
+        company.setCompanyName(resultSet.getString("CompanyName"));
+        return company;
     }
 }
